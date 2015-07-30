@@ -3,30 +3,33 @@ header("Access-Control-Allow-Origin: *");
 // header("Content-Type: application/json; charset=UTF-8");
 include('../partials/dbconfig.php');
 
-// $query="select * from tblstudents";
-// $result = $conn->query($query) or die($conn->error.__LINE__);
+ try
+    {
+        $conn = OpenConnection();
+        $tsql = "SELECT [CompanyName] FROM SalesLT.Customer";
+        $result = sqlsrv_query($conn, $tsql);
+        if ($result == FALSE)
+            die(FormatErrors(sqlsrv_errors()));
+        $ctr = 0;
+        $arr[];
 
-// $arr = array();
+        while($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC))
+        {
+            $arr[$ctr] = $row;
+            $ctr++;
+        }
 
-// if($result->num_rows > 0) {
-// 	while($row = $result->fetch_assoc()) {
-// 		$arr[] = $row;	
-// 	}
-// }
+        sqlsrv_free_stmt($result);
+        sqlsrv_close($conn);
 
-$query = 'SELECT * FROM tblstudents';
-$result = mssql_query($query);
+        $json_response = json_encode($arr);
+		echo $json_response;
+    }
+    catch(Exception $e)
+    {
+        echo("Error!");
+    }
 
-if( $result === false ) {
-     die( print_r( sqlsrv_errors(), true));
-}
- 
-if($result->num_rows > 0) {
-	while($row = mssql_fetch_array($result))
-	{
-  		$arr[] = $row;
-	}
-}
 
-	$json_response = json_encode($arr);
-	echo $json_response;
+
+
