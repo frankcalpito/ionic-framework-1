@@ -20,7 +20,7 @@ $result = mssql_query($query);
 if( $result === false ) {
      die( print_r( sqlsrv_errors(), true));
 }
-
+ 
 if($result->num_rows > 0) {
 	while($row = mssql_fetch_array($result))
 	{

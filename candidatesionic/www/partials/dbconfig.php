@@ -12,8 +12,8 @@
         $selected = mssql_select_db('dbTest', $conn)
   		or die("Couldn't open database dbTest");
 
-    }
-    catch(Exception $e)
+	    }
+	catch(Exception $e)
     {
         echo("Error!");
     }
