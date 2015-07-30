@@ -27,8 +27,10 @@ if($result->num_rows > 0) {
 	}
 }
 
-	sqlsrv_free_stmt($result);
-    sqlsrv_close($conn);
+	// print_r($result);
+
+	// sqlsrv_free_stmt($result);
+ //    sqlsrv_close($conn);
 
 	$json_response = json_encode($arr);
 	echo $json_response;
