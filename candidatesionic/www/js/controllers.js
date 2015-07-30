@@ -53,10 +53,10 @@ angular.module('starter.controllers', [])
 })
 
 .controller('HelloCtrl', function($scope, $http, $ionicModal,$timeout) {
- $http.get("db/getRecords.php")
+ $http.get("http://www.w3schools.com/angular/customers_sql.aspx")
     .success(function(data) 
       {
-        $scope.students = data;
+        $scope.students = data.records;
         console.log(data);
       });
 
