@@ -1,7 +1,4 @@
 <?php 
-function OpenConnection()
-{
-
 	try
 	{
 		$serverName = "tcp:qhkdzwx2fn.database.windows.net,1433";
@@ -15,5 +12,3 @@ function OpenConnection()
 	{
 		echo("Error!");
 	}
-
-}
