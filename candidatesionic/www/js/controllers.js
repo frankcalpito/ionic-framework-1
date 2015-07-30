@@ -43,48 +43,68 @@ angular.module('starter.controllers', [])
 
 .controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
-    { title: 'Pop', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
+  { title: 'Pop', id: 1 },
+  { title: 'Chill', id: 2 },
+  { title: 'Dubstep', id: 3 },
+  { title: 'Indie', id: 4 },
+  { title: 'Rap', id: 5 },
+  { title: 'Cowbell', id: 6 }
   ];
 })
 
-.controller('HelloCtrl', function($scope, $http, $ionicModal,$timeout) {
- $http.get("http://www.w3schools.com/angular/customers_sql.aspx")
-    .success(function(data) 
-      {
-        $scope.students = data.records;
-        console.log(data);
-      });
+.controller('HelloCtrl', function($scope, $ionicModal,$timeout) {
 
-  $scope.newRecordData = {};
+  var client = new WindowsAzure.MobileServiceClient(
+    "https://fccazurewebservice.azure-mobile.net/",
+    "idAmScfMHgDXmAVtrsLWvuvYWRkMwY33"
+  );
 
-  $ionicModal.fromTemplateUrl('templates/add.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modalAdd = modal;
-  });
+  var item = { text: "Awesome item" };
 
-  $scope.closeModal = function() {
-    $scope.modalAdd.hide();
-  };
+        var tbl = client.getTable("tblstudents");
+        // $scope.students = data.records;
+        // tbl.insert({
+        //    name: "Frank",
+        //    city: "Baguio",
+        //    country: "Philippines"
+        // }).done(function(result){
+        //   console.log(JSON.stringify(result));
+        // },function(err){
+        //   console.log("err" +err);
+        // });
 
-  $scope.addRecord = function() {
-    $scope.modalAdd.show();
-  };
+        var query = tbl.select("name", "city", "country").read().done(function (results) {
+           console.log(JSON.stringify(results));
+           $scope.students = JSON.stringify(results);
+        }, function (err) {
+           console.log("Error: " + err);
+        });
 
-  $scope.doAdd = function() {
-    console.log('Doing login', $scope.newRecordData);
+        $scope.newRecordData = {};
+
+        $ionicModal.fromTemplateUrl('templates/add.html', {
+          scope: $scope
+        }).then(function(modal) {
+          $scope.modalAdd = modal;
+        });
+
+        $scope.closeModal = function() {
+          $scope.modalAdd.hide();
+        };
+
+        $scope.addRecord = function() {
+          $scope.modalAdd.show();
+        };
+
+        $scope.doAdd = function() {
+          console.log('Doing login', $scope.newRecordData);
 
     //call addRecord
 
     $timeout(function() {
       $http.post('db/addRecord.php', {'name': $scope.newRecordData.recordName, 'city': $scope.newRecordData.city, 'country': $scope.newRecordData.country}).then(function(response){
-            console.log(response.data);
-         });
+        console.log(response.data);
+      });
       $scope.newRecordData = {};
       $scope.closeModal();
     }, 1000);

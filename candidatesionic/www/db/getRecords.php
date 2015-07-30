@@ -18,6 +18,7 @@ include('../partials/dbconfig.php');
 			'city' => $row['city'],
 			'country' => $row['country']
 			);
+
 		$ctr++;
 	}
 
