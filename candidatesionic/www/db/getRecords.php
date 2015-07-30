@@ -14,23 +14,19 @@ include('../partials/dbconfig.php');
 // 	}
 // }
 
-$query = "SELECT * FROM tblstudents";
-$result = sqlsrv_query($conn, $query);
+$query = 'SELECT * FROM tblstudents';
+$result = mssql_query($query);
 
 if( $result === false ) {
      die( print_r( sqlsrv_errors(), true));
 }
 
 if($result->num_rows > 0) {
-	while($row = sqlsrv_fetch_object()) {
-		$arr[] = $row;	
+	while($row = mssql_fetch_array($result))
+	{
+  		$arr[] = $row;
 	}
 }
-
-	// print_r($result);
-
-	// sqlsrv_free_stmt($result);
- //    sqlsrv_close($conn);
 
 	$json_response = json_encode($arr);
 	echo $json_response;

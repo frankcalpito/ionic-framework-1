@@ -8,7 +8,10 @@
         $pass = '@zuR3s3rvER';
 
         $conn = mssql_connect($serverName, $user, $Pass) or die("Couldn't connect to SQL Server on $myServer"); 
-        
+
+        $selected = mssql_select_db('dbTest', $conn)
+  		or die("Couldn't open database dbTest");
+
     }
     catch(Exception $e)
     {
