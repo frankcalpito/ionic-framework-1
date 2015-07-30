@@ -1,0 +1,30 @@
+<ion-modal-view>
+<ion-header-bar>
+    <h1 class="title">New Record</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeModal()">Close</button>
+    </div>
+ </ion-header-bar>
+
+ <ion-content>
+ <form ng-submit="doAdd()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Name</span>
+          <input type="text" ng-model="newRecordData.recordName">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">City</span>
+          <input type="text" ng-model="newRecordData.city">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Country</span>
+          <input type="text" ng-model="newRecordData.country">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Add</button>
+        </label>
+      </div>
+    </form>
+</ion-content>
+</ion-modal-view>

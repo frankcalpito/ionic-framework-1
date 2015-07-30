@@ -1,0 +1,14 @@
+<ion-view view-title="List of customers">
+	<ion-content>
+		<ion-item collection-repeat="row in students">
+			<div id="list-body" class="row responsive-sm">
+				<div class="col col-50"> {{row.name}} </div>
+				<div class="col"> {{row.city}} </div>
+				<div class="col"> {{row.country}} </div>
+			</div>
+		</ion-item>
+		<div class="pull-right">
+			<button id="addRecord" class="btn btn-block button-positive" ng-click="addRecord()">Add Student</button>
+		</div>
+	</ion-content>
+</ion-view>
