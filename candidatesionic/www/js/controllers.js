@@ -59,23 +59,11 @@ angular.module('starter.controllers', [])
     "idAmScfMHgDXmAVtrsLWvuvYWRkMwY33"
   );
 
-  var item = { text: "Awesome item" };
-
         var tbl = client.getTable("tblstudents");
-        // $scope.students = data.records;
-        // tbl.insert({
-        //    name: "Frank",
-        //    city: "Baguio",
-        //    country: "Philippines"
-        // }).done(function(result){
-        //   console.log(JSON.stringify(result));
-        // },function(err){
-        //   console.log("err" +err);
-        // });
 
         var query = tbl.select("name", "city", "country").read().done(function (results) {
-           console.log(JSON.stringify(results));
-           $scope.students = JSON.stringify(results);
+           console.log(JSON.parse(JSON.stringify(results)));
+           $scope.students = JSON.parse(JSON.stringify(results));
         }, function (err) {
            console.log("Error: " + err);
         });
@@ -97,14 +85,21 @@ angular.module('starter.controllers', [])
         };
 
         $scope.doAdd = function() {
-          console.log('Doing login', $scope.newRecordData);
+          console.log('Doing add', $scope.newRecordData);
 
     //call addRecord
 
     $timeout(function() {
-      $http.post('db/addRecord.php', {'name': $scope.newRecordData.recordName, 'city': $scope.newRecordData.city, 'country': $scope.newRecordData.country}).then(function(response){
-        console.log(response.data);
-      });
+      
+      tbl.insert({
+           name: $scope.newRecordData.recordName,
+           city: $scope.newRecordData.city,
+           country: $scope.newRecordData.country
+        }).done(function(result){
+          console.log(JSON.stringify(result));
+        },function(err){
+          console.log("err" +err);
+        });
       $scope.newRecordData = {};
       $scope.closeModal();
     }, 1000);
